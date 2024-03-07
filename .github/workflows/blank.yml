@@ -87,7 +87,7 @@ jobs:
         run: |  
               cat modified-api.yaml
               # deck file openapi2kong -s test.yaml --select-tag=dev -o kong.yaml
-              deck sync  --select-tag test -s modified-api.yaml --konnect-token spat_hmgql8nQyF5RYUY6I1D7AOFPJs34fOpmgrwJWNCd1rzgiT5uZ --konnect-control-plane-name UoS-Enablement-Sessions
+              deck sync -s modified-api.yaml --konnect-token spat_hmgql8nQyF5RYUY6I1D7AOFPJs34fOpmgrwJWNCd1rzgiT5uZ --konnect-control-plane-name UoS-Enablement-Sessions
 
       
   publish-customer-api-to-portal:  # Publish the API to the dev portal
@@ -106,7 +106,7 @@ jobs:
          run: |
           echo "API_PRODUCT_NAME=Demo-product-one" >> $GITHUB_ENV
           echo "CONTROL_PLANE_NAME= UoS-Enablement-Sessions" >> $GITHUB_ENV
-          echo "GATEWAY_SERVICE_NAME=student-information-api" >> $GITHUB_ENV
+          echo "GATEWAY_SERVICE_NAME=key-svc" >> $GITHUB_ENV
 
        - name: Create API product
          run: |
