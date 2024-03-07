@@ -87,7 +87,7 @@ jobs:
         run: |  
               cat modified-api.yaml
               # deck file openapi2kong -s test.yaml --select-tag=dev -o kong.yaml
-              deck sync -s modified-api.yaml --konnect-token spat_hmgql8nQyF5RYUY6I1D7AOFPJs34fOpmgrwJWNCd1rzgiT5uZ --konnect-control-plane-name UoS-Enablement-Sessions
+              deck sync --select-tag=demo -s modified-api.yaml --konnect-token spat_hmgql8nQyF5RYUY6I1D7AOFPJs34fOpmgrwJWNCd1rzgiT5uZ --konnect-control-plane-name UoS-Enablement-Sessions
 
       
   publish-customer-api-to-portal:  # Publish the API to the dev portal
