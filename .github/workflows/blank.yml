@@ -105,8 +105,8 @@ jobs:
          id: set_env_vars
          run: |
           echo "API_PRODUCT_NAME=Demo-product-one" >> $GITHUB_ENV
-          echo "CONTROL_PLANE_NAME=KS-Cp-konnect" >> $GITHUB_ENV
-          echo "GATEWAY_SERVICE_NAME=SPEND_API" >> $GITHUB_ENV
+          echo "CONTROL_PLANE_NAME= UoS-Enablement-Sessions" >> $GITHUB_ENV
+          echo "GATEWAY_SERVICE_NAME=student-information-api" >> $GITHUB_ENV
 
        - name: Create API product
          run: |
