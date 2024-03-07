@@ -37,7 +37,7 @@ jobs:
           curl -sL https://github.com/kong/deck/releases/download/v1.34.0/deck_1.34.0_linux_amd64.tar.gz -o deck.tar.gz
           tar -xf deck.tar.gz -C /tmp 
           sudo cp /tmp/deck /usr/local/bin/
-          deck file openapi2kong -s test.yaml --select-tag=dev -o kong.yaml
+          deck file openapi2kong -s student.yaml --select-tag=dev -o kong.yaml
 
       - name: Key Auth Step
         run: |
@@ -87,7 +87,7 @@ jobs:
         run: |  
               cat modified-api.yaml
               # deck file openapi2kong -s test.yaml --select-tag=dev -o kong.yaml
-              deck sync  --select-tag dev -s modified-api.yaml --konnect-token spat_cbdDxuiAWLhjGVnKneiSOxz10au8pPqKmx6hL22cgNtheJLeA --konnect-control-plane-name Transit-testing
+              deck sync  --select-tag test -s modified-api.yaml --konnect-token spat_hmgql8nQyF5RYUY6I1D7AOFPJs34fOpmgrwJWNCd1rzgiT5uZ --konnect-control-plane-name UoS-Enablement-Sessions
 
       
   publish-customer-api-to-portal:  # Publish the API to the dev portal
@@ -112,7 +112,7 @@ jobs:
          run: |
                   curl --request POST \
                     --url https://us.api.konghq.com/v2/api-products \
-                    --header 'Authorization: Bearer spat_cbdDxuiAWLhjGVnKneiSOxz10au8pPqKmx6hL22cgNtheJLeA' \
+                    --header 'Authorization: Bearer spat_hmgql8nQyF5RYUY6I1D7AOFPJs34fOpmgrwJWNCd1rzgiT5uZ' \
                     --header 'Content-Type: application/json' \
                     --data '{
                       "name": "${{ env.API_PRODUCT_NAME }}",
@@ -125,7 +125,7 @@ jobs:
             api_product_name="${{ env.API_PRODUCT_NAME }}"
             api_product_id=$(curl --request GET \
               --url https://us.api.konghq.com/v2/api-products \
-              --header 'Authorization: Bearer spat_cbdDxuiAWLhjGVnKneiSOxz10au8pPqKmx6hL22cgNtheJLeA' \
+              --header 'Authorization: Bearer spat_hmgql8nQyF5RYUY6I1D7AOFPJs34fOpmgrwJWNCd1rzgiT5uZ' \
               | jq -r --arg api_product_name "$api_product_name" '.data[] | select(.name == $api_product_name) | .id // empty')
             
             if [ "$api_product_id" = "empty" ]; then
@@ -138,7 +138,7 @@ jobs:
          run: |
           Dev_portal_id=$(curl --request GET \
             --url https://us.api.konghq.com/v2/portals \
-            --header 'Authorization: Bearer spat_cbdDxuiAWLhjGVnKneiSOxz10au8pPqKmx6hL22cgNtheJLeA' \
+            --header 'Authorization: Bearer spat_hmgql8nQyF5RYUY6I1D7AOFPJs34fOpmgrwJWNCd1rzgiT5uZ' \
             | jq -r '.data[].id')
               echo "DEV_PORTAL_ID=$Dev_portal_id" >> $GITHUB_ENV
 
@@ -148,7 +148,7 @@ jobs:
            echo "Dev Portal ID: $DEV_PORTAL_ID"
            curl --request PATCH \
             --url https://us.api.konghq.com/v2/api-products/$API_PRODUCT_ID \
-            --header 'Authorization: Bearer spat_cbdDxuiAWLhjGVnKneiSOxz10au8pPqKmx6hL22cgNtheJLeA' \
+            --header 'Authorization: Bearer spat_hmgql8nQyF5RYUY6I1D7AOFPJs34fOpmgrwJWNCd1rzgiT5uZ' \
             --header 'Content-Type: application/json' \
             --data "{
               \"portal_ids\":[\"$DEV_PORTAL_ID\"]
@@ -194,7 +194,7 @@ jobs:
           echo "Service ID: $Service_ID"
           echo "API Product Version ID: $API_Product_Version_ID"
           curl --location --request PATCH "https://us.api.konghq.com/v2/api-products/$API_PRODUCT_ID/product-versions/$API_Product_Version_ID" \
-                --header 'Authorization: Bearer spat_cbdDxuiAWLhjGVnKneiSOxz10au8pPqKmx6hL22cgNtheJLeA' \
+                --header 'Authorization: Bearer spat_hmgql8nQyF5RYUY6I1D7AOFPJs34fOpmgrwJWNCd1rzgiT5uZ' \
                 --header 'Content-Type: application/json' \
                 --data "{
                         \"name\": \"v1\",
@@ -211,7 +211,7 @@ jobs:
           echo "API PRODUCT ID: $API_PRODUCT_ID"
           echo "API Product Version ID: $API_Product_Version_ID"
           curl --location --request POST "https://us.api.konghq.com/v2/api-products/$API_PRODUCT_ID/product-versions/$API_Product_Version_ID/specifications" \
-            --header 'Authorization: Bearer spat_cbdDxuiAWLhjGVnKneiSOxz10au8pPqKmx6hL22cgNtheJLeA' \
+            --header 'Authorization: Bearer spat_hmgql8nQyF5RYUY6I1D7AOFPJs34fOpmgrwJWNCd1rzgiT5uZ' \
             --header 'Content-Type: application/json' \
             --data '{
               "name": "student.yaml",
